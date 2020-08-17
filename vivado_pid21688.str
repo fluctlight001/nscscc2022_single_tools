@@ -546,3 +546,123 @@ selectButton(RDIResource.BaseDialog_OK, "OK"); // a (aj)
 // Device view-level: 0.1
 // Elapsed time: 10 seconds
 dismissDialog("Open Implemented Design"); // bB (cr)
+// [GUI Memory]: 235 MB (+1587kb) [00:46:11]
+// Elapsed time: 456 seconds
+selectTab((HResource) null, (HResource) null, "Sources", 0); // aL (aI, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, thinpad_top (thinpad_top.v), clock_gen : pll_example (pll_example.xci)]", 3, false); // B (F, cr)
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, thinpad_top (thinpad_top.v), clock_gen : pll_example (pll_example.xci)]", 3, false, false, false, false, false, true); // B (F, cr) - Double Click
+// Run Command: PAResourceCommand.PACommandNames_RECUSTOMIZE_CORE
+// O (cr):  Re-customize IP : addNotify
+// r (cr): Re-customize IP: addNotify
+// [GUI Memory]: 250 MB (+2809kb) [00:46:16]
+dismissDialog("Re-customize IP"); // O (cr)
+selectTab(PAResourceTtoZ.XPG_TabbedPane_TABBED_PANE, (HResource) null, "Output Clocks", 1); // cU (E, r)
+setText("CLKOUT2 REQUESTED OUT FREQ", "59", true); // D (cV, r)
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_OBJECT_CHANGE
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (r)
+dismissDialog("Re-customize IP"); // r (cr)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PACKAGER_OBJECT_ADD
+// TclEventType: PACKAGER_OBJECT_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: FILESET_UPDATE_IP
+// Tcl Message: set_property -dict [list CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {59} CONFIG.MMCM_CLKFBOUT_MULT_F {18.875} CONFIG.MMCM_CLKOUT0_DIVIDE_F {94.375} CONFIG.MMCM_CLKOUT1_DIVIDE {16} CONFIG.CLKOUT1_JITTER {286.293} CONFIG.CLKOUT1_PHASE_ERROR {154.096} CONFIG.CLKOUT2_JITTER {190.887} CONFIG.CLKOUT2_PHASE_ERROR {154.096}] [get_ips pll_example] 
+// aI (cr): Generate Output Products: addNotify
+// TclEventType: FILE_SET_CHANGE
+// HMemoryUtils.trashcanNow. Engine heap size: 2,407 MB. GUI used memory: 183 MB. Current time: 8/17/20, 11:28:56 PM CST
+// Device view-level: 0.1
+selectButton(PAResourceQtoS.SimpleOutputProductDialog_GENERATE_OUTPUT_PRODUCTS_IMMEDIATELY, "Generate"); // a (aI)
+// HOptionPane Warning: 'A background task is running. Please wait until it completes and try again. (Background Task)'
+selectButton("OptionPane.button", "OK"); // JButton (A, H)
+selectButton(PAResourceQtoS.SimpleOutputProductDialog_GENERATE_OUTPUT_PRODUCTS_IMMEDIATELY, "Generate"); // a (aI)
+// HOptionPane Warning: 'A background task is running. Please wait until it completes and try again. (Background Task)'
+selectButton("OptionPane.button", "OK"); // JButton (A, H)
+selectButton(PAResourceQtoS.SimpleOutputProductDialog_GENERATE_OUTPUT_PRODUCTS_IMMEDIATELY, "Generate"); // a (aI)
+// bB (cr):  Managing Output Products : addNotify
+// Tcl Message: generate_target all [get_files  D:/8.16/fpga103-line2_1/thinpad_top.srcs/sources_1/ip/pll_example/pll_example.xci] 
+// Tcl Message: INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'pll_example'... INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'pll_example'... 
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'pll_example'... INFO: [IP_Flow 19-1686] Generating 'Implementation' target for IP 'pll_example'... INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'pll_example'... 
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: catch { config_ip_cache -export [get_ips -all pll_example] } 
+// TclEventType: OOC_IP_CACHE_USED
+// TclEventType: PROJ_DESIGN_MODE_SET
+// Tcl Message: INFO: [IP_Flow 19-4838] Using cached IP synthesis design for IP pll_example, cache-ID = eeb1a7962a546f70. 
+// TclEventType: PROJ_DESIGN_MODE_SET
+// Tcl Message: export_ip_user_files -of_objects [get_files D:/8.16/fpga103-line2_1/thinpad_top.srcs/sources_1/ip/pll_example/pll_example.xci] -no_script -sync -force -quiet 
+// Tcl Message: create_ip_run [get_files -of_objects [get_fileset sources_1] D:/8.16/fpga103-line2_1/thinpad_top.srcs/sources_1/ip/pll_example/pll_example.xci] 
+// Tcl Message: INFO: [Vivado 12-3453] The given sub-design is up-to-date, no action was taken.  If a run is still desired, use the '-force' option for the file:'D:/8.16/fpga103-line2_1/thinpad_top.srcs/sources_1/ip/pll_example/pll_example.xci' 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_CHANGE
+// Tcl Message: export_simulation -of_objects [get_files D:/8.16/fpga103-line2_1/thinpad_top.srcs/sources_1/ip/pll_example/pll_example.xci] -directory D:/8.10/fpga103-master/thinpad_top.ip_user_files/sim_scripts -ip_user_files_dir D:/8.10/fpga103-master/thinpad_top.ip_user_files -ipstatic_source_dir D:/8.10/fpga103-master/thinpad_top.ip_user_files/ipstatic -lib_map_path [list {modelsim=D:/8.16/fpga103-line2_1/thinpad_top.cache/compile_simlib/modelsim} {questa=D:/8.16/fpga103-line2_1/thinpad_top.cache/compile_simlib/questa} {riviera=D:/8.16/fpga103-line2_1/thinpad_top.cache/compile_simlib/riviera} {activehdl=D:/8.16/fpga103-line2_1/thinpad_top.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet 
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_CHANGE
+// TclEventType: PACKAGER_MESSAGE_RESET
+// TclEventType: PACKAGER_UNLOAD_CORE
+selectButton("OptionPane.button", "OK"); // JButton (A, G)
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "thinpad_top.v", 3); // i (h, cr)
+selectCodeEditor("thinpad_top.v", 264, 161); // ch (w, cr)
+selectCodeEditor("thinpad_top.v", 287, 108); // ch (w, cr)
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Program and Debug, Generate Bitstream]", 20, false); // u (O, cr)
+// Run Command: PAResourceCommand.PACommandNames_RUN_BITGEN
+// A (cr): Synthesis is Out-of-date: addNotify
+selectButton(RDIResource.BaseDialog_YES, "Yes"); // a (A)
+// bB (cr):  Resetting Runs : addNotify
+// TclEventType: RUN_MODIFY
+dismissDialog("Synthesis is Out-of-date"); // A (cr)
+// TclEventType: RUN_RESET
+// Tcl Message: reset_run synth_1 
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_RESET
+// TclEventType: RUN_MODIFY
+// f (cr): Launch Runs: addNotify
+selectButton(RDIResource.BaseDialog_OK, "OK"); // a (f)
+// 'cw' command handler elapsed time: 3 seconds
+// TclEventType: FILESET_TARGET_UCF_CHANGE
+dismissDialog("Launch Runs"); // f (cr)
+// TclEventType: RUN_LAUNCH
+// TclEventType: FILESET_TARGET_UCF_CHANGE
+// TclEventType: DESIGN_STALE
+// TclEventType: RUN_LAUNCH
+// TclEventType: RUN_MODIFY
+// bB (cr):  Generate Bitstream : addNotify
+// Tcl Message: launch_runs impl_1 -to_step write_bitstream -jobs 8 
+// Tcl Message: INFO: [Vivado 12-4149] The synthesis checkpoint for IP 'D:/8.16/fpga103-line2_1/thinpad_top.srcs/sources_1/ip/pll_example/pll_example.xci' is already up-to-date 
+// Tcl Message: [Mon Aug 17 23:29:24 2020] Launched synth_1... Run output will be captured here: D:/8.16/fpga103-line2_1/thinpad_top.runs/synth_1/runme.log [Mon Aug 17 23:29:24 2020] Launched impl_1... Run output will be captured here: D:/8.16/fpga103-line2_1/thinpad_top.runs/impl_1/runme.log 
+dismissDialog("Generate Bitstream"); // bB (cr)
+// TclEventType: RUN_STATUS_CHANGE
+// Elapsed time: 26 seconds
+selectButton(PAResourceAtoD.DesignTimingSumSectionPanel_WORST_NEGATIVE_SLACK, "0.749 ns"); // h (Q, cr)
+// PAPropertyPanels.initPanels (Path 1) elapsed time: 0.3s
+selectTable(PAResourceTtoZ.TimingItemFlatTablePanel_TABLE, "Path 10 ; 1.0551347 ; 22 ; 57 ; u_mycpu/u_l2_id_ex/ex_reg2_rdata_reg[13]/C ; u_mycpu/u_pc/pc_reg[17]/D ; 16.153696 ; 8.775999 ; 7.3776956 ; 17.245508 ; clk_out2_pll_example ; clk_out2_pll_example ;  ; 0.09467789", 9, "u_mycpu/u_l2_id_ex/ex_reg2_rdata_reg[13]/C", 4, true, false, false, false, false); // i (O, cr) - Shift Key
+selectTable(PAResourceTtoZ.TimingItemFlatTablePanel_TABLE, "Path 10 ; 1.0551347 ; 22 ; 57 ; u_mycpu/u_l2_id_ex/ex_reg2_rdata_reg[13]/C ; u_mycpu/u_pc/pc_reg[17]/D ; 16.153696 ; 8.775999 ; 7.3776956 ; 17.245508 ; clk_out2_pll_example ; clk_out2_pll_example ;  ; 0.09467789", 9, "u_mycpu/u_l2_id_ex/ex_reg2_rdata_reg[13]/C", 4, false, false, false, true, false); // i (O, cr) - Popup Trigger
+selectMenu(PAResourceQtoS.SelectMenu_MARK, "Mark"); // af (ao, Popup.HeavyWeightWindow)
+selectMenuItem(PAResourceCommand.PACommandNames_SCHEMATIC, "Schematic"); // ai (ao, Popup.HeavyWeightWindow)
+// Run Command: PAResourceCommand.PACommandNames_SCHEMATIC
+// Schematic: addNotify
+// [GUI Memory]: 263 MB (+390kb) [00:47:23]
+maximizeView(PAResourceOtoP.PAViews_BASE_WORKSPACE, "BaseWorkspace"); // H (aI, cr)
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_STEP_COMPLETED
