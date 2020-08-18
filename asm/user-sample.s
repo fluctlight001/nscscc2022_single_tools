@@ -8,7 +8,7 @@ __start:
     ori $t0, $zero, 0x1   # t0 = 1
     ori $t1, $zero, 0x1   # t1 = 1
     xor $v0, $v0,   $v0   # v0 = 0
-    ori $v1, $zero, 8    # v1 = 10
+    ori $v1, $zero, 10    # v1 = 10
     lui $a0, 0x8040       # a0 = 0x80400000
 
 loop:
