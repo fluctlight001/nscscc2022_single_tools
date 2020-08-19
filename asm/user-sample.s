@@ -5,22 +5,37 @@
 
 __start:
 .text
-    ori $t0, $zero, 0x1   # t0 = 1
-    ori $t1, $zero, 0x1   # t1 = 1
-    xor $v0, $v0,   $v0   # v0 = 0
-    ori $v1, $zero, 10    # v1 = 10
+    ori $t1, $zero, 4
+    ori $t0, $zero, 2   # t0 = 1
     li $a0, 0x80400000       # a0 = 0x80400000
+    sw  $t0, 0($a0)
+    addu $a0, $a0, $t1
 
-loop:
-    addu  $t2, $t0, $t1   # t2 = t0+t1
-    ori   $t0, $t1, 0x0   # t0 = t1
-    ori   $t1, $t2, 0x0   # t1 = t2
-    sw    $t1, 0($a0)
-    addiu $a0, $a0, 4     # a0 += 4
-    addiu $v0, $v0, 1     # v0 += 1
-
-    bne   $v0, $v1, loop
-    ori   $zero, $zero, 0 # nop
-
+    ori $t0, $zero, 3
+    sw  $t0, 0($a0)
+    addu $a0, $a0, $t1
+    ori $t0, $zero, 5
+    sw  $t0, 0($a0)
+    addu $a0, $a0, $t1
+    ori $t0, $zero, 8
+    sw  $t0, 0($a0)
+    addu $a0, $a0, $t1
+    ori $t0, $zero, 13
+    sw  $t0, 0($a0)
+    addu $a0, $a0, $t1
+    ori $t0, $zero, 21
+    sw  $t0, 0($a0)
+    addu $a0, $a0, $t1
+    ori $t0, $zero, 34
+    sw  $t0, 0($a0)
+    addu $a0, $a0, $t1
+    ori $t0, $zero, 55
+    sw  $t0, 0($a0)
+    addu $a0, $a0, $t1
+    ori $t0, $zero, 89
+    sw  $t0, 0($a0)
+    addu $a0, $a0, $t1
+    ori $t0, $zero, 144
+    sw  $t0, 0($a0)
     jr    $ra
     ori   $zero, $zero, 0 # nop
