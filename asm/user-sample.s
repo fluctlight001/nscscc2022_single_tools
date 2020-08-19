@@ -9,7 +9,7 @@ __start:
     ori $t1, $zero, 0x1   # t1 = 1
     xor $v0, $v0,   $v0   # v0 = 0
     ori $v1, $zero, 10    # v1 = 10
-    lui $a0, 0x8040       # a0 = 0x80400000
+    li $a0, 0x80400000       # a0 = 0x80400000
 
 loop:
     addu  $t2, $t0, $t1   # t2 = t0+t1
