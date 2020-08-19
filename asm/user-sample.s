@@ -20,10 +20,12 @@ l2:
     andi $a3, $t1, 1         # tmp & 1
     addu $v0, $v0, $a3       # v0 = v0 + tmp & 1
     srl $t1, $t1, 1          # tmp >> 1
+    beq $t1, $zero, l2_end   # if tmp == 0
+    xor $a3, $a3, $a3
     bne $t9, $a2, l2         # if j != j_max
     xor $a3, $a3, $a3   
     
-
+l2_end:
     addu $v1, $v1, $v0       # v1 = v1 + v0
     xor $v0, $v0, $v0        # v0 = 0
     bne $t8, $a1, l1         # if i != i_max
