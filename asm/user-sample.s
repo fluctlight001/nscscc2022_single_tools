@@ -16,12 +16,13 @@ l1:
     ori $a2, $zero, 0        # j = 0
     addu $t1, $zero, $a1     # tmp = i
 l2:
-    xor $a3, $a3, $a3
+    addiu $a2, $a2, 1        # j = j + 1
     andi $a3, $t1, 1         # tmp & 1
     addu $v0, $v0, $a3       # v0 = v0 + tmp & 1
     srl $t1, $t1, 1          # tmp >> 1
-    bne $t9, $a2, l2         # if j != j_max   
-    addiu $a2, $a2, 1        # j = j + 1
+    bne $t9, $a2, l2         # if j != j_max
+    xor $a3, $a3, $a3   
+    
 
     addu $v1, $v1, $v0       # v1 = v1 + v0
     xor $v0, $v0, $v0        # v0 = 0
