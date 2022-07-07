@@ -1,4 +1,7 @@
 `timescale 1ns / 1ps
+
+`define TRACE_REF_FILE "../../../../golden_trace.txt"
+
 module tb;
 
 wire clk_50M, clk_11M0592;
@@ -39,8 +42,14 @@ wire flash_oe_n;         //Flash读使能信号，低有效
 wire flash_we_n;         //Flash写使能信号，低有效
 wire flash_byte_n;       //Flash 8bit模式选择，低有效。在使用flash的16位模式时请设为1
 
+wire [31:0] debug_wb_pc;
+wire [3:0] debug_wb_rf_wen;
+wire [4:0] debug_wb_rf_wnum;
+wire [31:0] debug_wb_rf_wdata;
+
 //Windows需要注意路径分隔符的转义，例如"D:\\foo\\bar.bin"
-parameter BASE_RAM_INIT_FILE = "C:\\Users\\Fluctlight\\Desktop\\2020_CPU\\kernel.bin"; //BaseRAM初始化文件，请修改为实际的绝对路径
+parameter BASE_RAM_INIT_FILE = "D:\\Project\\lab\\nscscc2022_single_v1\\kernel\\kernel.bin"; //BaseRAM初始化文件，请修改为实际的绝对路径
+//parameter BASE_RAM_INIT_FILE = "C:\\Users\\Fluctlight\\Desktop\\2020_CPU\\kernel.bin"; //BaseRAM初始化文件，请修改为实际的绝对路径
 parameter EXT_RAM_INIT_FILE = "C:\\Users\\Fluctlight\\Desktop\\2020_CPU\\matrix.bin"; //BaseRAM初始化文件，请修改为实际的绝对路径
 //parameter EXT_RAM_INIT_FILE = "C:\\Users\\Fluctlight\\Desktop\\2020_CPU\\crypto.bin"; //BaseRAM初始化文件，请修改为实际的绝对路径
 //parameter BASE_RAM_INIT_FILE = "C:\\Users\\Fluctlight\\Desktop\\2020_CPU\\nscscc2020_v0.02\\nscscc2020\\supervisor_v2.01\\kernel.bin"; //BaseRAM初始化文件，请修改为实际的绝对路径
@@ -101,7 +110,11 @@ thinpad_top dut(
     .flash_oe_n(flash_oe_n),
     .flash_ce_n(flash_ce_n),
     .flash_byte_n(flash_byte_n),
-    .flash_we_n(flash_we_n)
+    .flash_we_n(flash_we_n),
+    .debug_wb_pc      (debug_wb_pc),
+    .debug_wb_rf_wen  (debug_wb_rf_wen),
+    .debug_wb_rf_wnum (debug_wb_rf_wnum),
+    .debug_wb_rf_wdata(debug_wb_rf_wdata)
 );
 // 时钟源
 clock osc(
@@ -207,6 +220,32 @@ initial begin
         ext1.mem_array1[i] = tmp_array[i][16+:8];
         ext2.mem_array0[i] = tmp_array[i][8+:8];
         ext2.mem_array1[i] = tmp_array[i][0+:8];
+    end
+end
+
+
+
+//wdata[i*8+7 : i*8] is valid, only wehile wen[i] is valid
+wire [31:0] debug_wb_rf_wdata_v;
+assign debug_wb_rf_wdata_v[31:24] = debug_wb_rf_wdata[31:24] & {8{debug_wb_rf_wen[3]}};
+assign debug_wb_rf_wdata_v[23:16] = debug_wb_rf_wdata[23:16] & {8{debug_wb_rf_wen[2]}};
+assign debug_wb_rf_wdata_v[15: 8] = debug_wb_rf_wdata[15: 8] & {8{debug_wb_rf_wen[1]}};
+assign debug_wb_rf_wdata_v[7 : 0] = debug_wb_rf_wdata[7 : 0] & {8{debug_wb_rf_wen[0]}};
+
+// open the trace file;
+integer trace_ref;
+initial begin
+    trace_ref = $fopen(`TRACE_REF_FILE, "w");
+end
+
+reg        debug_end;
+// generate trace
+always @(posedge clk_50M)
+begin
+    if(|debug_wb_rf_wen && debug_wb_rf_wnum!=5'd0)
+    begin
+        $fdisplay(trace_ref, "%h %h %h %h", 1'b1,
+            debug_wb_pc, debug_wb_rf_wnum, debug_wb_rf_wdata_v);
     end
 end
 endmodule

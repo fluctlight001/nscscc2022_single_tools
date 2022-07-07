@@ -51,7 +51,12 @@ module thinpad_top(
     output wire video_hsync,       //行同步（水平同步）信号
     output wire video_vsync,       //场同步（垂直同步）信号
     output wire video_clk,         //像素时钟输出
-    output wire video_de           //行数据有效信号，用于区分消隐区
+    output wire video_de,           //行数据有效信号，用于区分消隐区
+
+    output wire [31:0] debug_wb_pc,
+    output wire [3:0] debug_wb_rf_wen,
+    output wire [4:0] debug_wb_rf_wnum,
+    output wire [31:0] debug_wb_rf_wdata
 );
 
 /* =========== Demo code begin =========== */
@@ -111,10 +116,10 @@ mycpu_top u_mycpu(
     .data_sram_addr   (cpu_data_addr ),
     .data_sram_wdata  (cpu_data_wdata),
     .data_sram_rdata  (cpu_data_rdata),
-    .debug_wb_pc(),
-    .debug_wb_rf_wen(),
-    .debug_wb_rf_wnum(),
-    .debug_wb_rf_wdata()
+    .debug_wb_pc      (debug_wb_pc),
+    .debug_wb_rf_wen  (debug_wb_rf_wen),
+    .debug_wb_rf_wnum (debug_wb_rf_wnum),
+    .debug_wb_rf_wdata(debug_wb_rf_wdata)
 );
 // cpu 本身没有问题
 
@@ -327,7 +332,7 @@ end
 
 
 // uart
-async_receiver #(.ClkFrequency(59000000),.Baud(9600)) //接收模块，9600无检验位
+async_receiver #(.ClkFrequency(50000000),.Baud(9600)) //接收模块，9600无检验位
     ext_uart_r(
         .clk(clk_20M),                       //外部时钟信号
         .RxD(rxd),                           //外部串行信号输入
@@ -360,7 +365,7 @@ always @(posedge clk_20M) begin //将缓冲区ext_uart_buffer发送出去
     end
 end
 
-async_transmitter #(.ClkFrequency(59000000),.Baud(9600)) //发送模块，9600无检验位
+async_transmitter #(.ClkFrequency(50000000),.Baud(9600)) //发送模块，9600无检验位
     ext_uart_t(
         .clk(clk_20M),                  //外部时钟信号
         .TxD(txd),                      //串行信号输出

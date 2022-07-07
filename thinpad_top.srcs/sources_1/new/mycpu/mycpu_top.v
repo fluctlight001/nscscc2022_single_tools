@@ -456,9 +456,10 @@ module mycpu_top(
   //                           (l1_decoder_wreg_o ? 
   //                           ((l1_decoder_waddr_o == l2_decoder_reg1_addr) || (l1_decoder_waddr_o == l2_decoder_reg2_addr) ? `False_v : `True_v ) : `True_v) : `False_v;     
 
-  assign l2_pc_plus_4_req = ~id_pc_branch_flag & ~((id_alusel_o == `EXE_LOAD_STORE) & (id_wreg_o || id_waddr_o == l2_decoder_reg1_addr || id_waddr_o == l2_decoder_reg2_addr)) & (l1_run & l2_run) & (l1_is_ok & l2_is_ok) ? 
-                            (l1_decoder_wreg_o ? 
-                            ((l1_decoder_waddr_o == l2_decoder_reg1_addr) || (l1_decoder_waddr_o == l2_decoder_reg2_addr) ? `False_v : `True_v ) : `True_v) : `False_v;  
+  assign l2_pc_plus_4_req = 1'b0;
+                            // ~id_pc_branch_flag & ~((id_alusel_o == `EXE_LOAD_STORE) & (id_wreg_o || id_waddr_o == l2_decoder_reg1_addr || id_waddr_o == l2_decoder_reg2_addr)) & (l1_run & l2_run) & (l1_is_ok & l2_is_ok) ? 
+                            // (l1_decoder_wreg_o ? 
+                            // ((l1_decoder_waddr_o == l2_decoder_reg1_addr) || (l1_decoder_waddr_o == l2_decoder_reg2_addr) ? `False_v : `True_v ) : `True_v) : `False_v;  
 
   assign l2_decoder_pc_o = l2_pc_plus_4_req ? l2_decoder_pc : `ZeroWord;
   assign l2_decoder_reg1_read_o = l2_pc_plus_4_req ? l2_decoder_reg1_read : `False_v;
@@ -617,7 +618,7 @@ module mycpu_top(
     .waddr_o(ex_waddr_o), .wreg_o(ex_wreg_o), .wdata_o(ex_wdata_o),
     .hi_i(hi_i), .lo_i(lo_i),
     .wb_hi_i(wb_hi_i), .wb_lo_i(wb_lo_i), .wb_whilo_i(wb_whilo_i),
-    .mem_hi_i(mem_hi_o), .mem_lo_i(mem_lo_o), .mem_whilo_i(mem_whilo_o), // ÕâÀï°´ÕÕÀ×Ë¼ÀÚÊéÉÏµÄÊ¹ÓÃµÄÊÇmemÖ®ºóµÄÐÅºÅ£¬¸öÈË¸Ð¾õÊ¹ÓÃmemÇ°µÄÐÅºÅÒ²Ã»Çø±ð
+    .mem_hi_i(mem_hi_o), .mem_lo_i(mem_lo_o), .mem_whilo_i(mem_whilo_o), // ï¿½ï¿½ï¿½ï°´ï¿½ï¿½ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½Ê¹ï¿½Ãµï¿½ï¿½ï¿½memÖ®ï¿½ï¿½ï¿½ï¿½ÅºÅ£ï¿½ï¿½ï¿½ï¿½Ë¸Ð¾ï¿½Ê¹ï¿½ï¿½memÇ°ï¿½ï¿½ï¿½Åºï¿½Ò²Ã»ï¿½ï¿½ï¿½ï¿½
     .dcache_hi_i(dcache_hi), .dcache_lo_i(dcache_lo), .dcache_whilo_i(dcache_whilo),
     // .premem_hi_i(premem_hi), .premem_lo_i(premem_lo), .premem_whilo_i(premem_whilo),
     .hi_o(ex_hi_o), .lo_o(ex_lo_o), .whilo_o(ex_whilo_o),
@@ -790,50 +791,50 @@ module mycpu_top(
   //   .we_icache_o(icache_we_w), .pc_icache_o(icache_pc_w), .inst_icache_o(icache_inst_w), .last_for_icache(last_for_icache),
   //   .mem_addr_i(dcache_mem_addr_i), .mem_we_i(dcache_mem_we_i), .mem_sel_i(dcache_mem_sel_i), .mem_data_i(dcache_mem_data_i), .mem_ce_i(dcache_mem_ce_i), .isMiss_from_dcache(isMiss_from_dcache), .cache_i(dcache_cache_o),
   //   .mem_addr_o(dcache_mem_addr_w), .mem_we_o(dcache_mem_we_w), .mem_data_o(dcache_mem_data_w), .cache_o(dcache_cache_w), .last_for_dcache(dcache_last_w),
-  // //Ð´µØÖ·Í¨µÀÐÅºÅ
-  //   .awid(awid),//Ð´µØÖ·ID£¬ÓÃÀ´±êÖ¾Ò»×éÐ´ÐÅºÅ
-  //   .awaddr(awaddr),//Ð´µØÖ·£¬¸ø³öÒ»´ÎÐ´Í»·¢´«ÊäµÄÐ´µØÖ·
-  //   .awlen(awlen),//Í»·¢³¤¶È£¬¸ø³öÍ»·¢´«ÊäµÄ´ÎÊý
-  //   .awsize(awsize),//Í»·¢´óÐ¡£¬¸ø³öÃ¿´ÎÍ»·¢´«ÊäµÄ×Ö½ÚÊý
-  //   .awburst(awburst),//Í»·¢ÀàÐÍ
-  //   .awlock(awlock),//×ÜÏßËøÐÅºÅ£¬¿ÉÌá¹©²Ù×÷µÄÔ­×ÓÐÔ
-  //   .awcache(awcache),//ÄÚ´æÀàÐÍ£¬±íÃ÷Ò»´Î´«ÊäÊÇÔõÑùÍ¨¹ýÏµÍ³µÄ
-  //   .awprot(awprot),//±£»¤ÀàÐÍ£¬±íÃ÷Ò»´Î´«ÊäµÄÌØÈ¨¼¶¼°°²È«µÈ¼¶
-  //   .awvalid(awvalid),//ÓÐÐ§ÐÅºÅ£¬±íÃ÷´ËÍ¨µÀµÄµØÖ·¿ØÖÆÐÅºÅÓÐÐ§
-  //   .awready(awready),//±íÃ÷"´Ó"¿ÉÒÔ½ÓÊÕµØÖ·ºÍ¶ÔÓ¦µÄ¿ØÖÆÐÅºÅ
+  // //Ð´ï¿½ï¿½Ö·Í¨ï¿½ï¿½ï¿½Åºï¿½
+  //   .awid(awid),//Ð´ï¿½ï¿½Ö·IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Ò»ï¿½ï¿½Ð´ï¿½Åºï¿½
+  //   .awaddr(awaddr),//Ð´ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ð´Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½Ö·
+  //   .awlen(awlen),//Í»ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½
+  //   .awsize(awsize),//Í»ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
+  //   .awburst(awburst),//Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  //   .awlock(awlock),//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÅºÅ£ï¿½ï¿½ï¿½ï¿½á¹©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½
+  //   .awcache(awcache),//ï¿½Ú´ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ÏµÍ³ï¿½ï¿½
+  //   .awprot(awprot),//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½È¼ï¿½
+  //   .awvalid(awvalid),//ï¿½ï¿½Ð§ï¿½ÅºÅ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Äµï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½Ð§
+  //   .awready(awready),//ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Õµï¿½Ö·ï¿½Í¶ï¿½Ó¦ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Åºï¿½
 
-  // //Ð´Êý¾ÝÍ¨µÀÐÅºÅ
-  //   .wid(wid),//Ò»´ÎÐ´´«ÊäµÄID tag
-  //   .wdata(wdata),//Ð´Êý¾Ý
-  //   .wstrb(wstrb),//Ð´Êý¾ÝÓÐÐ§µÄ×Ö½ÚÏß£¬ÓÃÀ´±íÃ÷ÄÄ8bitsÊý¾ÝÊÇÓÐÐ§µÄ
-  //   .wlast(wlast),//±íÃ÷´Ë´Î´«ÊäÊÇ×îºóÒ»¸öÍ»·¢´«Êä
-  //   .wvalid(wvalid),//Ð´ÓÐÐ§£¬±íÃ÷´Ë´ÎÐ´ÓÐÐ§
-  //   .wready(wready),//±íÃ÷´Ó»ú¿ÉÒÔ½ÓÊÕÐ´Êý¾Ý
-  // //Ð´ÏìÓ¦Í¨µÀÐÅºÅ
-  //   .bid(bid),//Ð´ÏìÓ¦ID tag
-  //   .bresp(bresp),//Ð´ÏìÓ¦£¬±íÃ÷Ð´´«ÊäµÄ×´Ì¬ 00ÎªÕý³££¬µ±È»¿ÉÒÔ²»Àí»á
-  //   .bvalid(bvalid),//Ð´ÏìÓ¦ÓÐÐ§
-  //   .bready(bready),//±íÃ÷Ö÷»úÄÜ¹»½ÓÊÕÐ´ÏìÓ¦
+  // //Ð´ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Åºï¿½
+  //   .wid(wid),//Ò»ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ID tag
+  //   .wdata(wdata),//Ð´ï¿½ï¿½ï¿½ï¿½
+  //   .wstrb(wstrb),//Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½8bitsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½
+  //   .wlast(wlast),//ï¿½ï¿½ï¿½ï¿½ï¿½Ë´Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  //   .wvalid(wvalid),//Ð´ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë´ï¿½Ð´ï¿½ï¿½Ð§
+  //   .wready(wready),//ï¿½ï¿½ï¿½ï¿½ï¿½Ó»ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½
+  // //Ð´ï¿½ï¿½Ó¦Í¨ï¿½ï¿½ï¿½Åºï¿½
+  //   .bid(bid),//Ð´ï¿½ï¿½Ó¦ID tag
+  //   .bresp(bresp),//Ð´ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ 00Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½
+  //   .bvalid(bvalid),//Ð´ï¿½ï¿½Ó¦ï¿½ï¿½Ð§
+  //   .bready(bready),//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½Ó¦
 
-  // //×ÜÏß²à½Ó¿Ú
-  // //¶ÁµØÖ·Í¨µÀÐÅºÅ
-  //   .arid(arid),//¶ÁµØÖ·ID£¬ÓÃÀ´±êÖ¾Ò»×éÐ´ÐÅºÅ
-  //   .araddr(araddr),//¶ÁµØÖ·£¬¸ø³öÒ»´ÎÐ´Í»·¢´«ÊäµÄ¶ÁµØÖ·
-  //   .arlen(arlen),//Í»·¢³¤¶È£¬¸ø³öÍ»·¢´«ÊäµÄ´ÎÊý
-  //   .arsize(arsize),//Í»·¢´óÐ¡£¬¸ø³öÃ¿´ÎÍ»·¢´«ÊäµÄ×Ö½ÚÊý
-  //   .arburst(arburst),//Í»·¢ÀàÐÍ
-  //   .arlock(arlock),//×ÜÏßËøÐÅºÅ£¬¿ÉÌá¹©²Ù×÷µÄÔ­×ÓÐÔ
-  //   .arcache(arcache),//ÄÚ´æÀàÐÍ£¬±íÃ÷Ò»´Î´«ÊäÊÇÔõÑùÍ¨¹ýÏµÍ³µÄ
-  //   .arprot(arprot),//±£»¤ÀàÐÍ£¬±íÃ÷Ò»´Î´«ÊäµÄÌØÈ¨¼¶¼°°²È«µÈ¼¶
-  //   .arvalid(arvalid),//ÓÐÐ§ÐÅºÅ£¬±íÃ÷´ËÍ¨µÀµÄµØÖ·¿ØÖÆÐÅºÅÓÐÐ§
-  //   .arready(arready),//±íÃ÷"´Ó"¿ÉÒÔ½ÓÊÕµØÖ·ºÍ¶ÔÓ¦µÄ¿ØÖÆÐÅºÅ
-  // //¶ÁÊý¾ÝÍ¨µÀÐÅºÅ
-  //   .rid(rid),//¶ÁID tag
-  //   .rdata(rdata),//¶ÁÊý¾Ý
-  //   .rresp(rresp),//¶ÁÏìÓ¦£¬±íÃ÷¶Á´«ÊäµÄ×´Ì¬
-  //   .rlast(rlast),//±íÃ÷¶ÁÍ»·¢µÄ×îºóÒ»´Î´«Êä
-  //   .rvalid(rvalid),//±íÃ÷´ËÍ¨µÀÐÅºÅÓÐÐ§
-  //   .rready(rready)//±íÃ÷Ö÷»úÄÜ¹»½ÓÊÕ¶ÁÊý¾ÝºÍÏìÓ¦ÐÅÏ¢
+  // //ï¿½ï¿½ï¿½ß²ï¿½Ó¿ï¿½
+  // //ï¿½ï¿½ï¿½ï¿½Ö·Í¨ï¿½ï¿½ï¿½Åºï¿½
+  //   .arid(arid),//ï¿½ï¿½ï¿½ï¿½Ö·IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Ò»ï¿½ï¿½Ð´ï¿½Åºï¿½
+  //   .araddr(araddr),//ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ð´Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Ö·
+  //   .arlen(arlen),//Í»ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½
+  //   .arsize(arsize),//Í»ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
+  //   .arburst(arburst),//Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  //   .arlock(arlock),//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÅºÅ£ï¿½ï¿½ï¿½ï¿½á¹©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½
+  //   .arcache(arcache),//ï¿½Ú´ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ÏµÍ³ï¿½ï¿½
+  //   .arprot(arprot),//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½È¼ï¿½
+  //   .arvalid(arvalid),//ï¿½ï¿½Ð§ï¿½ÅºÅ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Äµï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½Ð§
+  //   .arready(arready),//ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½"ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Õµï¿½Ö·ï¿½Í¶ï¿½Ó¦ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Åºï¿½
+  // //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Åºï¿½
+  //   .rid(rid),//ï¿½ï¿½ID tag
+  //   .rdata(rdata),//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  //   .rresp(rresp),//ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
+  //   .rlast(rlast),//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î´ï¿½ï¿½ï¿½
+  //   .rvalid(rvalid),//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½Ð§
+  //   .rready(rready)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½Õ¶ï¿½ï¿½ï¿½ï¿½Ýºï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ï¢
   // );
 
 endmodule
