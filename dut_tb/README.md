@@ -1,7 +1,9 @@
 ## 修改方法
-1. 替换待测试项目的tb.sv 路径：nscscc2022_single\thinpad_top.srcs\sim_1\new\tb.sv
-2. 相对应的需要在thinpad_top中增加对应的debug接口 sample中给了例子，可以自行查看
-3. debug信号组说明
+1. 替换待测试项目的 tb.sv，也就是你自己的 tb.sv 路径：nscscc2022_single\thinpad_top.srcs\sim_1\new\tb.sv
+2. 在 thinpad_top 中增加对应的 debug 接口
+3. debug 接口的实例化在 sample_thinpad_top.v 中给了例子，在文件中搜索 debug_wb_ 就可大致理解其连接方法
+
+## debug 信号组说明
 
 | 信号名 | 介绍 |  
 |-|-|
