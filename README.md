@@ -30,3 +30,6 @@
 ---
 
 ## PS: 如果觉得好用，请star以示鼓励
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/fluctlight001/nscscc2022_single_tools.svg?variant=light)](https://starchart.cc/fluctlight001/nscscc2022_single_tools)
